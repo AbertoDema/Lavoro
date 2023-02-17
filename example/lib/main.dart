@@ -1,5 +1,6 @@
 import 'package:example/pages/supported_countries_map.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,14 +47,14 @@ class _MyHomePageState extends State<MyHomePage>
           elevation: 0,
         ),
         body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: TabBarView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: controller,
-              children: [
-                SupportedCountriesMap(),
-              ]),
+          //height: MediaQuery.of(context).size.height,
+          //width: MediaQuery.of(context).size.width,
+          child: ListView(
+            children: [
+              Text("ciao"),
+              SupportedCountriesMap(),
+            ],
+          ),
         ));
   }
 }
