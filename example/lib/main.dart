@@ -40,21 +40,16 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title:
-              Text('GUESS THE COUNTRY', style: TextStyle(color: Colors.blue)),
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-        ),
-        body: Container(
-          //height: MediaQuery.of(context).size.height,
-          //width: MediaQuery.of(context).size.width,
-          child: ListView(
-            children: [
-              Text("ciao"),
-              SupportedCountriesMap(),
-            ],
-          ),
-        ));
+      appBar: AppBar(
+        title: Text('GUESS THE COUNTRY', style: TextStyle(color: Colors.blue)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Container(
+        //height: MediaQuery.of(context).size.height,
+        //width: MediaQuery.of(context).size.width,
+        child: SupportedCountriesMap(),
+      ),
+    );
   }
 }
