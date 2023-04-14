@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:countries_world_map/countries_world_map.dart';
 import 'package:countries_world_map/data/maps/world_map.dart';
@@ -23,11 +24,15 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
   ];
   final List<String> list_id = ["af", "al", "dz", "as"];
   bool timer_avviato = false;
+  int index_lista = -1;
+  String domanda = "";
 
   void startTimer() {
     countdownTimer =
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
     timer_avviato = true;
+    index_lista = Random().nextInt(list_id.length);
+    domanda = "Trova: " + list_name[index_lista];
   }
 
   void stopTimer() {
@@ -63,12 +68,25 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
           width: MediaQuery.of(context).size.width,
           child: Column(
             children: [
-              Text(
-                '$minutes:$seconds',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                    fontSize: 50),
+              Center(
+                child: Row(
+                  children: [
+                    Text(
+                      domanda,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 25),
+                    ),
+                    Text(
+                      '$minutes:$seconds',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 50),
+                    ),
+                  ],
+                ),
               ),
               InteractiveViewer(
                 maxScale: 75.0,
