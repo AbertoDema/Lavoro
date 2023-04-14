@@ -15,10 +15,19 @@ class SupportedCountriesMap extends StatefulWidget {
 class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
   Timer? countdownTimer;
   Duration myDuration = Duration(minutes: 1);
+  final List<String> list_name = [
+    "afghanistan",
+    "albania",
+    "algeria",
+    "america samoa"
+  ];
+  final List<String> list_id = ["af", "al", "dz", "as"];
+  bool timer_avviato = false;
 
   void startTimer() {
     countdownTimer =
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
+    timer_avviato = true;
   }
 
   void stopTimer() {
@@ -74,7 +83,9 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
                         // If the color of a country is not specified it will take in a default color.
                         defaultColor: Colors.grey,
                         // CountryColors takes in 250 different colors that will color each country the color you want. In this example it generates a random color each time SetState({}) is called.
-                        callback: (id, name, tapdetails) {print(id);},
+                        callback: (id, name, tapdetails) {
+                          print(id);
+                        },
                       ),
                     ),
                     // Creates 8% from right side so the map looks more centered.
@@ -82,33 +93,36 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
                   ],
                 ),
               ),
-              ElevatedButton(
-                onPressed: startTimer,
-                child: Text(
-                  'Start',
-                  style: TextStyle(
-                    fontSize: 30,
+              Visibility(
+                visible: !timer_avviato,
+                child: ElevatedButton(
+                  onPressed: startTimer,
+                  child: Text(
+                    'Start',
+                    style: TextStyle(
+                      fontSize: 30,
+                    ),
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: stopTimer,
-                child: Text(
-                  'Stop',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: resetTimer,
-                child: Text(
-                  'Reset',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-              ),
+              // ElevatedButton(
+              //   onPressed: stopTimer,
+              //   child: Text(
+              //     'Stop',
+              //     style: TextStyle(
+              //       fontSize: 30,
+              //     ),
+              //   ),
+              // ),
+              // ElevatedButton(
+              //   onPressed: resetTimer,
+              //   child: Text(
+              //     'Reset',
+              //     style: TextStyle(
+              //       fontSize: 30,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
