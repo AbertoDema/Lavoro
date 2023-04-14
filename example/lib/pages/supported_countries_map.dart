@@ -74,7 +74,7 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
                         // If the color of a country is not specified it will take in a default color.
                         defaultColor: Colors.grey,
                         // CountryColors takes in 250 different colors that will color each country the color you want. In this example it generates a random color each time SetState({}) is called.
-                        callback: (id, name, tapdetails) {},
+                        callback: (id, name, tapdetails) {print(id);},
                       ),
                     ),
                     // Creates 8% from right side so the map looks more centered.
