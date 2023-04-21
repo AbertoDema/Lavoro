@@ -23,9 +23,16 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
     "america samoa"
   ];
   final List<String> list_id = ["af", "al", "dz", "as"];
+  final List<Color?> list_color = [
+    Colors.grey,
+    Colors.grey,
+    Colors.grey,
+    Colors.grey
+  ];
   bool timer_avviato = false;
   int index_lista = -1;
   String domanda = "";
+  int punteggio = 0;
 
   void startTimer() {
     countdownTimer =
@@ -70,6 +77,8 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
             children: [
               Center(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       domanda,
@@ -78,12 +87,21 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
                           color: Colors.black,
                           fontSize: 25),
                     ),
+                    SizedBox(width: 50),
                     Text(
                       '$minutes:$seconds',
                       style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                           fontSize: 50),
+                    ),
+                    SizedBox(width: 50),
+                    Text(
+                      "PUNTEGGIO: " + punteggio.toString(),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                          fontSize: 25),
                     ),
                   ],
                 ),
@@ -97,12 +115,25 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
                       // Actual widget from the Countries_world_map package.
                       child: SimpleMap(
                         instructions: SMapWorld.instructions,
-
+                        colors: SMapWorldColors(
+                          aF: list_color[0],
+                          aL: list_color[1],
+                          dZ: list_color[2],
+                          aS: list_color[3], // This makes USA green
+                        ).toMap(),
                         // If the color of a country is not specified it will take in a default color.
                         defaultColor: Colors.grey,
                         // CountryColors takes in 250 different colors that will color each country the color you want. In this example it generates a random color each time SetState({}) is called.
                         callback: (id, name, tapdetails) {
                           print(id);
+                          if (list_id[index_lista] == id) {
+                            punteggio++;
+                            list_color[index_lista] = Colors.green;
+                            do {
+                              index_lista = Random().nextInt(list_id.length);
+                              domanda = "Trova: " + list_name[index_lista];
+                            } while (list_color[index_lista] != Colors.grey);
+                          } else {}
                         },
                       ),
                     ),
