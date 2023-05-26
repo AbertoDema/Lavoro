@@ -15,7 +15,7 @@ class SupportedCountriesMap extends StatefulWidget {
 
 class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
   Timer? countdownTimer;
-  Duration myDuration = Duration(minutes: 5);
+  Duration myDuration = Duration(seconds: 10);
   final List<String> list_name = [
     "afghanistan",
     "albania",
@@ -473,6 +473,7 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
     countdownTimer =
         Timer.periodic(Duration(seconds: 1), (_) => setCountDown());
     timer_avviato = true;
+    punteggio = 0;
     index_lista = Random().nextInt(list_id.length);
     domanda = "Trova: " + list_name[index_lista];
   }
@@ -483,7 +484,18 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
 
   void resetTimer() {
     stopTimer();
-    setState(() => myDuration = Duration(minutes: 1));
+    setState(() => myDuration = Duration(seconds: 10));
+  }
+
+  void skipnation() {
+    do {
+      index_lista = Random().nextInt(list_id.length);
+      domanda = "Trova: " + list_name[index_lista];
+    } while (list_color[index_lista] != Colors.grey);
+    punteggio = punteggio - 2;
+    if (punteggio < 0) {
+      punteggio = 0;
+    }
   }
 
   void setCountDown() {
@@ -492,6 +504,9 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
       final seconds = myDuration.inSeconds - reduceSecondsBy;
       if (seconds < 0) {
         countdownTimer!.cancel();
+        timer_avviato = false;
+        resetTimer();
+        print("tempo terminato");
       } else {
         myDuration = Duration(seconds: seconds);
       }
@@ -720,17 +735,35 @@ class _SupportedCountriesMapState extends State<SupportedCountriesMap> {
                   ],
                 ),
               ),
-              Visibility(
-                visible: !timer_avviato,
-                child: ElevatedButton(
-                  onPressed: startTimer,
-                  child: Text(
-                    'Start',
-                    style: TextStyle(
-                      fontSize: 30,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Visibility(
+                    visible: !timer_avviato,
+                    child: ElevatedButton(
+                      onPressed: startTimer,
+                      child: Text(
+                        'Start',
+                        style: TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                  Visibility(
+                    visible: timer_avviato,
+                    child: ElevatedButton(
+                      onPressed: skipnation,
+                      child: Text(
+                        'Skip',
+                        style: TextStyle(
+                          fontSize: 30,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
               // ElevatedButton(
               //   onPressed: stopTimer,
